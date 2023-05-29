@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "c0006a6c-7e30-469a-a316-77095e03d06f",
+		"name": "MeuLivroDeReceitasRequest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13748750",
+		"_collection_link": "https://cloudy-astronaut-852907.postman.co/workspace/Dotnet~69de1111-f3ec-453e-b845-a6f4c4a86061/collection/13748750-c0006a6c-7e30-469a-a316-77095e03d06f?action=share&creator=13748750&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Registrar usuario",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//67 9 9999-9999\r",
+							"\r",
+							"var dd = _.random(10, 99)\r",
+							"var numeroAdicional = _.random(1, 9)\r",
+							"var primeiros4Digitos = _.random(1000, 9999)\r",
+							"var ultimos4Digitos = _.random(1000, 9999)\r",
+							"\r",
+							"var numeroTelefone = `${dd} ${numeroAdicional} ${primeiros4Digitos}-${ultimos4Digitos}`\r",
+							"\r",
+							"pm.environment.set(\"numeroTelefone\", numeroTelefone)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar se a requisição foi feita com sucesso\", function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"    pm.response.to.have.withBody;\r",
+							"    pm.response.to.have.jsonBody(\"token\");\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"{{$randomFullName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"senha\": \"{{$randomPassword}}\",\r\n  \"telefone\": \"{{numeroTelefone}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}usuario",
+					"host": [
+						"{{URLBASE}}usuario"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URLBASE",
+			"value": "https://localhost:7218/",
+			"type": "string"
+		}
+	]
+}
